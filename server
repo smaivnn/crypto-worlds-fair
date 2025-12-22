@@ -1,0 +1,28 @@
+#!/bin/bash
+
+case "$1" in
+  install)
+    echo "📦 Installing dependencies..."
+    (cd front && npm install)
+    (cd back && npm install)
+    ;;
+
+  build)
+    echo "🔧 Building frontend..."
+    (cd front && npm run build)
+    echo "📁 Copying frontend build to backend..."
+    rm -rf back/public
+    mkdir -p back/public
+    cp -r front/dist/* back/public/
+    rm -rf front/dist
+    ;;
+
+  start)
+    echo "🚀 Starting backend..."
+    (cd back && npm run start:prod)
+    ;;
+
+  *)
+    echo "Usage: ./server {install|build|start}"
+    ;;
+esac
