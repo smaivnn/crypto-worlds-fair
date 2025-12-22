@@ -1,11 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
+import Logo from '../logo';
 
 const LeftMenu = () => (
-    <div className="flex items-center space-x-2">
-        <Link to="/" className="text-2xl font-bold flex items-center">
-            <img src="/images/logo.svg" alt="OrinCode Logo" className="inline-block w-8 h-8 mr-2" />
-            <span className="text-foreground">Orin</span>
-            <span className="text-primary">Code</span>
+    <div className="space-x-2">
+        <Link to="/">
+            <Logo className="w-8 h-8" />
         </Link>
     </div>
 );

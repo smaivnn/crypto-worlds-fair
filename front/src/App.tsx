@@ -1,6 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import About from './pages/about';
 import Layout from './components/layout/Layout';
 import { GlobalModal } from './components/modal';
 import { GlobalLoading } from './components/loading';
@@ -18,7 +16,6 @@ function App() {
                 {/* Page without Menu */}
                 <Route element={<Layout screen="full" withMenu={false} />}>
                     <Route path="/" element={<MainPage />} />
-                    <Route path="/about" element={<About />} />
                     <Route path="*" element={<div>404 Not Found</div>} />
                 </Route>
             </Routes>

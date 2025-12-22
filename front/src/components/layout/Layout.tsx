@@ -5,6 +5,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { MenuLeft } from '@/components/menu/left';
 import Header from './Header';
+import Footer from './Footer';
 
 interface LayoutProps {
     screen?: 'phone' | 'tablet' | 'laptop' | 'desktop' | 'full';
@@ -28,6 +29,7 @@ const Layout = ({ screen, withMenu = true }: LayoutProps) => {
             <Header />
             <Outlet />
             {/* 푸터 추가 영역 */}
+            <Footer />
         </div>
     );
 
