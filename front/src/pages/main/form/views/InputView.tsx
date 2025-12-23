@@ -172,7 +172,7 @@ const InputView = ({
                                                 htmlFor="solar"
                                                 className="text-sm cursor-pointer"
                                             >
-                                                Solar Calendar
+                                                Solar Calendar (most common)
                                             </label>
                                         </div>
                                         <div className="flex items-center space-x-2">
@@ -272,7 +272,7 @@ const InputView = ({
                         </Field>
 
                         <Field>
-                            <FieldLabel htmlFor="birthTimezone">Where you born?</FieldLabel>
+                            <FieldLabel htmlFor="birthTimezone">Birth Place</FieldLabel>
                             <FieldDescription>
                                 Used to interpret your birth time correctly, including daylight
                                 saving time.
