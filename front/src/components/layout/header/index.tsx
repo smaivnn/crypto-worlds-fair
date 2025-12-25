@@ -3,14 +3,7 @@ import type { MenuItem } from '@/components/menu';
 import HeaderNav from './HeaderNav';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Logo from '@/components/logo';
 
 const MobileContainer = ({ menuItems }: { menuItems: MenuItem[] }) => (

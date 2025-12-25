@@ -5,6 +5,8 @@ import { GlobalLoading } from './components/loading';
 import { GlobalToast } from './components/toast';
 import MainPage from './pages/main';
 import AboutPage from './pages/about';
+import AnalysisPage from './pages/analysis';
+import NewAnalysisPage from './pages/newAnalysis';
 
 function App() {
     return (
@@ -12,9 +14,11 @@ function App() {
             {/* Routes */}
             <Routes>
                 {/* Page with Menu */}
-                <Route element={<Layout screen="full" />}>
+                <Route element={<Layout screen="phone" withHeader={false} withFooter={false} />}>
                     <Route path="/" element={<MainPage />} />
+                    <Route path="/new-analysis" element={<NewAnalysisPage />} />
                     <Route path="about" element={<AboutPage />} />
+                    <Route path="analysis" element={<AnalysisPage />} />
                     <Route path="*" element={<div>404 Not Found</div>} />
                 </Route>
 

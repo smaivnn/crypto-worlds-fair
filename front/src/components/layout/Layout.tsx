@@ -21,7 +21,7 @@ const Layout = ({ screen, withHeader = true, withMenu = true, withFooter = true 
     const menuPosition = menuConfig?.position || 'top';
     // PAGE STRUCTURE
     return (
-        <div className={`root-container screen-${finalScreenSize}`}>
+        <div className={`root-container screen-${finalScreenSize}  `}>
             {/* 헤더 */}
             {withHeader && (
                 <Header withMenu={withMenu} menuPosition={menuPosition} menuItems={menuItems} />

@@ -1,12 +1,15 @@
 import { Container } from '@/components/container';
+import AnnouncementBarView from './views/announcementBar';
+import Navigation from './views/Navigation';
 import HeroSectionView from './views/heroSection';
-import Form from './form';
 
 const MainPage = () => {
     return (
-        <Container>
+        <Container className="flex flex-col min-h-screen py-6">
+            <AnnouncementBarView />
             <HeroSectionView />
-            <Form />
+            {/* <Form /> */}
+            <Navigation />
         </Container>
     );
 };

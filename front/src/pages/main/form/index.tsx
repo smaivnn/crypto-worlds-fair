@@ -2,8 +2,10 @@ import { z } from 'zod';
 import { useMemo, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { generateBirthDateOptions } from '@/utils/date';
 import InputView from './views/InputView';
+import { useSubmitBaziFormMutation } from '@/queries/bazi.queries';
 
 const schema = z.object({
     name: z.string().trim().min(1, 'Full Name is required'),
@@ -22,6 +24,18 @@ export type FormValues = z.infer<typeof schema>;
 
 const Form = () => {
     const [isBirthDateOpen, setIsBirthDateOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const submitBazi = useSubmitBaziFormMutation({
+        onSuccess: (data) => {
+            console.log('success', data);
+            navigate('/analysis');
+        },
+        onError: (err) => {
+            console.error(err);
+            alert('failed');
+        },
+    });
 
     const {
         register,
@@ -76,8 +90,9 @@ const Form = () => {
             ...values,
             birthDate,
         };
-        console.log('submit values:', params);
-        // TODO: API 호출
+
+        // TODO: API 호출 (POST) -> 성공 시 응답 받고 /analysis로 이동
+        await submitBazi.mutateAsync(params);
     };
 
     const inputViewProps = {
