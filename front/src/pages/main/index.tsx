@@ -1,17 +1,20 @@
-import { Container } from '@/components/container';
-import AnnouncementBarView from './views/announcementBar';
-import Navigation from './views/Navigation';
-import HeroSectionView from './views/heroSection';
+import { useEffect, useState } from 'react';
+import MainView from './MainView';
+import { safeJsonParse } from '@/utils/data';
+import { useUserStore } from '@/store/user';
 
 const MainPage = () => {
-    return (
-        <Container className="flex flex-col min-h-screen py-6">
-            <AnnouncementBarView />
-            <HeroSectionView />
-            {/* <Form /> */}
-            <Navigation />
-        </Container>
-    );
+    const setUser = useUserStore((s) => s.setUser);
+
+    useEffect(() => {
+        const profile = localStorage.getItem('profile');
+        const user = profile ? safeJsonParse(profile, null) : null;
+        if (user) {
+            setUser(user);
+        }
+    }, []);
+
+    return <MainView />;
 };
 
 export default MainPage;

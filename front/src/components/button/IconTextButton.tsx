@@ -26,6 +26,7 @@ interface IconTextButtonProps
     centerClassName?: string;
     rightClassName?: string;
     imageClassName?: string;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const IconTextButton = ({
@@ -44,6 +45,7 @@ const IconTextButton = ({
     centerClassName,
     rightClassName,
     imageClassName,
+    onClick,
     ...props
 }: IconTextButtonProps) => {
     const leftContent =
@@ -87,6 +89,7 @@ const IconTextButton = ({
                 className,
             )}
             {...props}
+            onClick={onClick}
         >
             <span className={cn('flex items-center justify-start', leftClassName)}>
                 {leftContent}

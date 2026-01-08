@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Logo from '@/components/logo';
+import { clsx } from 'clsx';
 
 const MobileContainer = ({ menuItems }: { menuItems: MenuItem[] }) => (
     <div className="mobile-header-container">
@@ -49,12 +50,18 @@ const DefaultContainer = () => {
 
 interface HeaderProps {
     withMenu: boolean;
+    mode: 'app' | 'document';
     menuPosition: 'top' | 'left';
     menuItems: MenuItem[];
 }
-const Header = ({ withMenu, menuPosition, menuItems }: HeaderProps) => {
+const Header = ({ withMenu, mode, menuPosition, menuItems }: HeaderProps) => {
     return (
-        <header className="relative z-50 w-full border border-border/50">
+        <header
+            className={clsx(
+                'z-50 w-full border border-border/50',
+                mode === 'app' ? 'bg-background/90 backdrop-blur-md' : 'fixed top-0 left-0',
+            )}
+        >
             <div className="w-full mx-auto px-12 py-4 header-cq">
                 {/* 상단메뉴 */}
                 {menuPosition === 'top' && withMenu && (

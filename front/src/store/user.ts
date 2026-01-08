@@ -1,9 +1,14 @@
 import { create } from 'zustand';
 
 interface User {
-    id: string;
     name: string;
+    gender: 'male' | 'female';
     email: string;
+    calendarType: 'solar' | 'lunar';
+    birthDate: string; // ISO string
+    timeZone: string;
+    birthLocation?: string;
+    birthTime: string; // e.g., "08:30"
 }
 
 interface UserStore {

@@ -7,6 +7,8 @@ import MainPage from './pages/main';
 import AboutPage from './pages/about';
 import AnalysisPage from './pages/analysis';
 import NewAnalysisPage from './pages/newAnalysis';
+import RequireProfileLayout from './routes/RequireProfile';
+import ProfilePage from './pages/profile';
 
 function App() {
     return (
@@ -14,16 +16,23 @@ function App() {
             {/* Routes */}
             <Routes>
                 {/* Page with Menu */}
-                <Route element={<Layout screen="phone" withHeader={false} withFooter={false} />}>
+                <Route
+                    element={
+                        <Layout mode="app" screen="mobile" withHeader={false} withFooter={false} />
+                    }
+                >
                     <Route path="/" element={<MainPage />} />
-                    <Route path="/new-analysis" element={<NewAnalysisPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route element={<RequireProfileLayout />}>
+                        <Route path="/new-analysis" element={<NewAnalysisPage />} />
+                    </Route>
                     <Route path="about" element={<AboutPage />} />
                     <Route path="analysis" element={<AnalysisPage />} />
                     <Route path="*" element={<div>404 Not Found</div>} />
                 </Route>
 
                 {/* Page without Menu */}
-                <Route element={<Layout screen="full" withMenu={false} />}></Route>
+                <Route element={<Layout mode="document" screen="full" />}></Route>
             </Routes>
 
             {/* Global Components */}
