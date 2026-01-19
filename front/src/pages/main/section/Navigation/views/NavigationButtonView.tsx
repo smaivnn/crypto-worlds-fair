@@ -1,7 +1,11 @@
 import IconTextButton from '@/components/button/IconTextButton';
 import { clsx } from 'clsx';
 
-const NavigationButtonView = () => {
+interface NavigationButtonViewProps {
+    copy: any;
+    onClick?: ({ path }: { path: string }) => void;
+}
+const NavigationButtonView = ({ copy, onClick }: NavigationButtonViewProps) => {
     return (
         <IconTextButton
             fitContent={true}
@@ -14,8 +18,9 @@ const NavigationButtonView = () => {
                 'hover:bg-muted/45 hover:border-border/80',
                 'active:scale-[0.98]',
             )}
+            onClick={() => onClick?.({ path: '/more-options' })}
         >
-            <span className="text-lg">More Options</span>
+            <span className="text-lg">{copy.title}</span>
         </IconTextButton>
     );
 };

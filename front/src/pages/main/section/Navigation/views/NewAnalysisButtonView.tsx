@@ -3,9 +3,10 @@ import { Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 
 interface NewAnalysisButtonViewProps {
+    copy: any;
     onClick?: ({ path }: { path: string }) => void;
 }
-const NewAnalysisButtonView = ({ onClick }: NewAnalysisButtonViewProps) => {
+const NewAnalysisButtonView = ({ copy, onClick }: NewAnalysisButtonViewProps) => {
     return (
         <div>
             <span
@@ -28,18 +29,16 @@ const NewAnalysisButtonView = ({ onClick }: NewAnalysisButtonViewProps) => {
                     'after:bg-white/20 after:border after:border-accent/80 after:rounded-[2px]',
                 )}
             >
-                2026 신년운세
+                {copy.floatingLabel}
             </span>
             <IconTextButton
                 fitContent={true}
                 className={clsx(
                     'group relative isolate overflow-hidden',
                     'py-2',
-                    'bg-accent-secondary text-accent-foreground',
                     'border border-border/60',
                     'transition-all duration-200',
                     'hover:-translate-y-0.5',
-                    'hover:bg-accent-secondary/95 hover:border-border/80',
                     'active:scale-[0.99]',
                     // soft inner highlight
                     'before:absolute before:inset-0 before:content-[""]',
@@ -54,12 +53,12 @@ const NewAnalysisButtonView = ({ onClick }: NewAnalysisButtonViewProps) => {
                     'group-hover:after:translate-x-[70%]',
                 )}
                 left={<Sparkles className="w-5 h-5" />}
-                onClick={() => onClick?.({ path: '/new-analysis' })}
+                onClick={() => onClick?.({ path: '/questions' })}
             >
                 <div>
-                    <span className="font-bold text-lg">Start Your Reading</span>
+                    <span className="font-bold text-lg">{copy.title}</span>
                     <span className="block text-xs font-medium mt-1 opacity-75">
-                        3 Free Readings Available
+                        {copy.caption}
                     </span>
                 </div>
             </IconTextButton>

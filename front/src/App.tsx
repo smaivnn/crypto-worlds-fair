@@ -4,11 +4,11 @@ import { GlobalModal } from './components/modal';
 import { GlobalLoading } from './components/loading';
 import { GlobalToast } from './components/toast';
 import MainPage from './pages/main';
-import AboutPage from './pages/about';
 import AnalysisPage from './pages/analysis';
 import NewAnalysisPage from './pages/newAnalysis';
 import RequireProfileLayout from './routes/RequireProfile';
 import ProfilePage from './pages/profile';
+import QuestionsPage from './pages/questions';
 
 function App() {
     return (
@@ -26,7 +26,7 @@ function App() {
                     <Route element={<RequireProfileLayout />}>
                         <Route path="/new-analysis" element={<NewAnalysisPage />} />
                     </Route>
-                    <Route path="about" element={<AboutPage />} />
+                    <Route path="questions" element={<QuestionsPage />} />
                     <Route path="analysis" element={<AnalysisPage />} />
                     <Route path="*" element={<div>404 Not Found</div>} />
                 </Route>

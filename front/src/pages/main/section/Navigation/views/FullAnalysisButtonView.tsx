@@ -3,7 +3,11 @@ import { Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
-const FullAnalysisButtonView = () => {
+interface FullAnalysisButtonViewProps {
+    copy: any;
+    onClick?: ({ path }: { path: string }) => void;
+}
+const FullAnalysisButtonView = ({ copy, onClick }: FullAnalysisButtonViewProps) => {
     return (
         <IconTextButton
             fitContent={true}
@@ -20,9 +24,9 @@ const FullAnalysisButtonView = () => {
             left={<Crown className="h-5 w-5 text-accent" />}
         >
             <Link to="/premium">
-                <span className="text-lg font-medium">View Full Analysis</span>
+                <span className="text-lg font-medium">{copy.title}</span>
                 <span className="block text-xs mt-1 opacity-60 group-hover:opacity-80">
-                    Premium • $9.99
+                    {copy.caption}
                 </span>
             </Link>
         </IconTextButton>

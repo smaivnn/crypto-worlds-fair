@@ -1,20 +1,12 @@
-import { useEffect, useState } from 'react';
 import MainView from './MainView';
-import { safeJsonParse } from '@/utils/data';
-import { useUserStore } from '@/store/user';
+import { useI18n } from '@/hooks/useI18n';
+import { landingCopy } from '@/i18n/landing.copy';
 
 const MainPage = () => {
-    const setUser = useUserStore((s) => s.setUser);
-
-    useEffect(() => {
-        const profile = localStorage.getItem('profile');
-        const user = profile ? safeJsonParse(profile, null) : null;
-        if (user) {
-            setUser(user);
-        }
-    }, []);
-
-    return <MainView />;
+    const { locale, setLocale } = useI18n('en');
+    const copy = landingCopy[locale];
+    const mainViewProps = { locale, setLocale, copy };
+    return <MainView {...mainViewProps} />;
 };
 
 export default MainPage;

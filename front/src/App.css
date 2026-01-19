@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@custom-variant dark (&:is(.dark *));
 
 /* Pretendard: adjust filename to match /public/fonts */
 @font-face {
@@ -19,7 +18,7 @@ body {
     padding: 0;
     overflow-x: hidden;
     font-size: 16px;
-    background-color: oklch(0.22 0.01 240);
+    background-color: var(--background);
 }
 
 /* Scroll policy by mode (set by Layout.tsx on <html>) */
@@ -41,76 +40,76 @@ html[data-scroll-mode='website'] body {
 }
 
 :root {
-    /* =========================================
-       Charcoal Black × Muted Gold (Matte, Minimal)
-       ========================================= */
-    --background: oklch(0.14 0.01 240);
-    --foreground: oklch(0.92 0.005 240); /* ≈ #E6E6E6 */
+    --background: #0b0b0b;
+    --foreground: #f5f5f5;
+    --fg-muted: rgba(245, 245, 245, 0.72);
+    --fg-faint: rgba(245, 245, 245, 0.55);
 
-    --card: oklch(0.18 0.01 240);
-    --card-foreground: oklch(0.92 0.005 240);
-
-    --popover: oklch(0.16 0.01 240);
-    --popover-foreground: oklch(0.92 0.005 240);
-
-    /* Brand / Actions (Muted Gold) */
-    --primary: oklch(0.72 0.07 80); /* Muted Gold ≈ #B79A5A */
-    --primary-foreground: oklch(0.12 0.01 240); /* text on gold = background */
-
-    /* Secondary / Muted */
-    --secondary: oklch(0.2 0.01 240); /* subtle surface step */
-    --secondary-foreground: oklch(0.9 0.006 240);
-
-    --muted: oklch(0.22 0.01 240); /* muted chips/bg */
-    --muted-foreground: oklch(0.72 0.01 240); /* ≈ #A8A8A8 */
-
-    /* Accent (keep same family as primary, but reserved for highlights) */
-    --accent: oklch(0.82 0.1 80);
-    --accent-foreground: oklch(0.12 0.01 240);
-
-    /* Optional: accent variations (for subtle backgrounds / hover) */
-    --accent-secondary: oklch(0.88 0.14 80);
-    --accent-tertiary: oklch(0.78 0.1 80);
-    /* States */
-    --destructive: oklch(0.6 0.16 28); /* muted red (not neon) */
-    --destructive-foreground: oklch(0.95 0.004 240);
+    /* Surfaces */
+    --card: #121212;
+    --card-2: #141414;
+    --popover: var(--card);
+    --popover-foreground: var(--foreground);
+    --card-foreground: var(--foreground);
 
     /* Lines */
-    --border: oklch(0.92 0.005 240 / 0.06); /* rgba(255,255,255,0.06) 느낌 */
-    --input: oklch(0.92 0.005 240 / 0.08);
-    --ring: oklch(0.72 0.07 80 / 0.55); /* gold focus ring (subtle) */
+    --border: rgba(245, 245, 245, 0.14);
+    --border-strong: rgba(245, 245, 245, 0.22);
+    --input: var(--border);
+    --ring: var(--border-strong);
 
-    /* Gradients (가능하면 서비스에선 비활성 권장. 필요하면 '아주 약하게') */
-    --gradient-from: oklch(0.72 0.07 80 / 0.25);
-    --gradient-via: oklch(0.72 0.07 80 / 0.12);
-    --gradient-to: oklch(0.12 0.01 240 / 0);
+    /* Point colors */
+    --accent-red: #8b1e1e; /* Desire Red */
+    --accent-violet: #5a4b8a; /* Cold Violet */
+    --accent-gold: #b7a46a; /* Muted Gold */
 
-    /* Charts (톤 통일: 네온 느낌 제거, 다크에서 눈 안 아프게) */
-    --chart-1: oklch(0.72 0.07 80);
-    --chart-2: oklch(0.7 0.03 240);
-    --chart-3: oklch(0.55 0.02 240);
-    --chart-4: oklch(0.78 0.05 82);
-    --chart-5: oklch(0.62 0.06 78);
+    /* ===== shadcn semantic mapping =====
+     - Taavah 기본 포인트는 RED
+     - 골드/바이올렛은 보조로 남겨둔다
+  */
+    --primary: var(--accent-red);
+    --primary-foreground: var(--foreground);
 
-    /* Radius */
-    --radius: 0.875rem; /* 유지 */
+    --secondary: var(--card-2);
+    --secondary-foreground: var(--foreground);
 
-    /* Sidebar (서비스에 사이드바 없으면 사실상 영향 없음. 톤만 맞춰둠) */
-    --sidebar: oklch(0.14 0.01 240);
-    --sidebar-foreground: oklch(0.92 0.005 240);
-    --sidebar-primary: oklch(0.72 0.07 80);
-    --sidebar-primary-foreground: oklch(0.12 0.01 240);
-    --sidebar-accent: oklch(0.2 0.01 240);
-    --sidebar-accent-foreground: oklch(0.92 0.005 240);
-    --sidebar-border: oklch(0.92 0.005 240 / 0.06);
-    --sidebar-ring: oklch(0.72 0.07 80 / 0.55);
+    --muted: var(--card-2);
+    --muted-foreground: var(--fg-muted);
+
+    --accent: var(--accent-red);
+    --accent-foreground: var(--foreground);
+
+    --destructive: var(--accent-red);
+    --destructive-foreground: var(--foreground);
+
+    /* Optional */
+    --accent-secondary: color-mix(in oklch, var(--accent-gold) 62%, white);
+    --accent-tertiary: color-mix(in oklch, var(--accent-violet) 50%, white);
+
+    /* Charts */
+    --chart-1: var(--accent-red);
+    --chart-2: var(--accent-violet);
+    --chart-3: var(--accent-gold);
+    --chart-4: var(--fg-muted);
+    --chart-5: var(--foreground);
+
+    /* Radius / Shadows */
+    --radius: 14px;
+    --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.45);
+    --shadow-hover: 0 14px 34px rgba(0, 0, 0, 0.55);
+
+    /* Sidebar (safe) */
+    --sidebar: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--card-2);
+    --sidebar-accent-foreground: var(--foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
 }
 
 @theme inline {
-    /* --font-sans: 'Gowun Dodum', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
-        'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    --font-mono: 'Geist Mono', 'Geist Mono Fallback'; */
-
     --font-sans: 'Pretendard', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
         'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
     --font-mono: 'Geist Mono', 'Geist Mono Fallback';
@@ -119,31 +118,39 @@ html[data-scroll-mode='website'] body {
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
+
     --color-background: var(--background);
     --color-foreground: var(--foreground);
+
     --color-card: var(--card);
     --color-card-foreground: var(--card-foreground);
     --color-popover: var(--popover);
     --color-popover-foreground: var(--popover-foreground);
+
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
+
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
+
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
     --color-accent-secondary: var(--accent-secondary);
     --color-accent-tertiary: var(--accent-tertiary);
+
     --color-destructive: var(--destructive);
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
+
     --color-chart-1: var(--chart-1);
     --color-chart-2: var(--chart-2);
     --color-chart-3: var(--chart-3);
     --color-chart-4: var(--chart-4);
     --color-chart-5: var(--chart-5);
+
     --color-sidebar: var(--sidebar);
     --color-sidebar-foreground: var(--sidebar-foreground);
     --color-sidebar-primary: var(--sidebar-primary);
@@ -152,47 +159,6 @@ html[data-scroll-mode='website'] body {
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
-}
-
-.dark {
-    /* Updated dark mode to match jade and earth tones */
-    --background: oklch(0.14 0.015 165);
-    --foreground: oklch(0.97 0.005 165);
-    --card: oklch(0.18 0.02 165);
-    --card-foreground: oklch(0.97 0.005 165);
-    --popover: oklch(0.18 0.02 165);
-    --popover-foreground: oklch(0.97 0.005 165);
-    --primary: oklch(0.65 0.12 165);
-    --primary-foreground: oklch(0.14 0.015 165);
-    --secondary: oklch(0.24 0.025 165);
-    --secondary-foreground: oklch(0.97 0.005 165);
-    --muted: oklch(0.26 0.025 165);
-    --muted-foreground: oklch(0.62 0.04 165);
-    --accent: oklch(0.68 0.14 168);
-    --accent-foreground: oklch(0.14 0.015 165);
-    --accent-secondary: oklch(0.75 0.12 55);
-    --accent-tertiary: oklch(0.72 0.1 45);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.97 0.005 165);
-    --border: oklch(0.32 0.035 165);
-    --input: oklch(0.22 0.025 165);
-    --ring: oklch(0.68 0.14 168);
-    --gradient-from: oklch(0.68 0.14 168);
-    --gradient-via: oklch(0.75 0.12 55);
-    --gradient-to: oklch(0.72 0.1 45);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.14 0.015 165);
-    --sidebar-foreground: oklch(0.97 0.005 165);
-    --sidebar-primary: oklch(0.65 0.12 165);
-    --sidebar-primary-foreground: oklch(0.14 0.015 165);
-    --sidebar-accent: oklch(0.24 0.025 165);
-    --sidebar-accent-foreground: oklch(0.97 0.005 165);
-    --sidebar-border: oklch(0.32 0.035 165);
-    --sidebar-ring: oklch(0.68 0.14 168);
 }
 
 @layer base {
@@ -265,18 +231,6 @@ html[data-scroll-mode='website'] body {
     animation: glow 2s ease-in-out infinite;
 }
 
-/* 3D 오브 효과 */
-.fantasy-orb {
-    background: radial-gradient(
-        circle at 30% 30%,
-        rgba(16, 216, 255, 0.8),
-        rgba(16, 216, 255, 0.3),
-        rgba(0, 0, 0, 0.8)
-    );
-    box-shadow: 0 0 50px rgba(16, 216, 255, 0.3), inset 0 0 50px rgba(16, 216, 255, 0.1),
-        0 0 100px rgba(16, 216, 255, 0.2);
-}
-
 .rotate-orb {
     animation: rotateOrb 20s linear infinite;
 }
@@ -285,18 +239,4 @@ html[data-scroll-mode='website'] body {
 .text-glow {
     text-shadow: 0 0 30px rgba(16, 216, 255, 0.6), 0 0 60px rgba(16, 216, 255, 0.4),
         0 0 90px rgba(16, 216, 255, 0.2);
-}
-
-/* 카드 호버 효과 */
-.fantasy-card {
-    transition: all 0.3s ease;
-    background: rgba(16, 216, 255, 0.05);
-    border: 1px solid rgba(16, 216, 255, 0.2);
-}
-
-.fantasy-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(16, 216, 255, 0.2);
-    background: rgba(16, 216, 255, 0.1);
-    border-color: rgba(16, 216, 255, 0.4);
 }
