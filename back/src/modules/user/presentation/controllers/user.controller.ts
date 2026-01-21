@@ -7,17 +7,16 @@ import { UpdateUserNameDto } from '../dto/update-user-name.dto';
 
 @Controller('users')
 export class UserController {
-  constructor(
-    private readonly getUserByIdUseCase: GetUserByIdUseCase,
-    // private readonly searchUserUseCase: SearchUserUseCase,
-  ) {}
+  constructor() // private readonly getUserByIdUseCase: GetUserByIdUseCase,
+  // private readonly searchUserUseCase: SearchUserUseCase,
+  {}
 
-  @Get(':id')
-  async getById(@Param('id') id: string): Promise<UserResponseDto> {
-    const user = await this.getUserByIdUseCase.execute(id);
+  // @Get(':id')
+  // async getById(@Param('id') id: string): Promise<UserResponseDto> {
+  //   const user = await this.getUserByIdUseCase.execute(id);
 
-    return UserResponseDto.from(user);
-  }
+  //   return UserResponseDto.from(user);
+  // }
 
   // @Get()
   // async search(@Query('keyword') keyword: string): Promise<UserResponseDto[]> {

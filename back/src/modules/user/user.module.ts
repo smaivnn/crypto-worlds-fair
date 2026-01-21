@@ -24,22 +24,21 @@ import { GetUserByIdUseCase } from './application/get-user-by-id.use-case';
     // ─────────────────────────────
     // Repository 인터페이스 → 구현체 매핑
     // ─────────────────────────────
-    {
-      provide: UserReadRepository,
-      useClass: UserReadPostgresRepository,
-    },
+    // {
+    //   provide: UserReadRepository,
+    //   useClass: UserReadPostgresRepository,
+    // },
     // {
     //   provide: UserSearchRepository,
     //   useClass: UserSearchElasticsearchRepository,
     // },
-
     // UseCases
-    GetUserByIdUseCase,
+    // GetUserByIdUseCase,
     // SearchUserUseCase,
   ],
   exports: [
     // 필요하면 UseCase를 다른 모듈에서 재사용할 수 있게 export
-    GetUserByIdUseCase,
+    // GetUserByIdUseCase,
     // SearchUserUseCase,
   ],
 })
