@@ -36,7 +36,7 @@ class ProfileDto {
 
   @IsOptional()
   @IsString()
-  birthCountry?: string; // "US"
+  birthPlace?: string; // "US"
 
   // ! 추후 업데이트 필요
   @IsOptional()
@@ -55,4 +55,8 @@ export class ResultRequestDto {
   @IsOptional()
   @IsString()
   version?: string; // "v1"
+
+  @IsOptional()
+  @IsIn(['en', 'ko'])
+  locale?: 'en' | 'ko';
 }

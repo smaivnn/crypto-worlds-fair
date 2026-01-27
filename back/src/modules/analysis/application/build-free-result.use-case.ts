@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ComputeResultOutput } from './compute-result.use-case';
-import { ScoreMap } from '../domain/desire.entity';
+import { getDesireLabel, ScoreMap } from '../domain/desire.entity';
 import { FREE_BLOCKS_KO, type FreeBlocks } from '../domain/free/free-blocks.ko';
+import { FREE_BLOCKS_EN } from '../domain/free/free-blocks.en';
 
 export type FreeResultCopy = {
   summaryCard: {
@@ -30,7 +31,7 @@ export type FreeResultCopy = {
  * 절차:
  * 1) userKey = hash(profile + answers)  // 유저의 입력을 대표하는 키
  * 2) seed   = hash(userKey + primary + secondary + sectionId)
- * 3) idx    = seed % 3  // 0~2
+ * 3) idx    = seed % variants.length
  * 4) pick   = variants[idx]
  */
 @Injectable()
@@ -46,37 +47,38 @@ export class BuildFreeResultUseCase {
     const secondaryKey = computed.secondary.key as keyof ScoreMap;
 
     // 1) seed (결정적 선택)
+    const answersKey = this.normalizeAnswers(answers);
     const userKey = this.hashString(
       JSON.stringify({
         birthDate: profile?.birthDate,
         birthTime: profile?.birthTime ?? null,
-        birthCountry: profile?.birthCountry ?? null,
-        answers,
+        birthPlace: profile?.birthPlace ?? null,
+        answers: answersKey,
       }),
     );
 
-    const pickIndex = (sectionId: string) => {
-      const seed = this.hashString(
-        `${userKey}|${primaryKey}|${secondaryKey}|${sectionId}`,
-      );
-      return seed % 3;
-    };
+    const seedFor = (sectionId: string) =>
+      this.hashString(`${userKey}|${primaryKey}|${secondaryKey}|${sectionId}`);
 
-    const blocks = this.getBlocksKo({ locale: computed.locale });
+    const blocks = this.getBlocks({ locale: computed.locale });
 
-    const pick = <T>(arr: T[], v: number): T => {
+    const pick = <T>(arr: T[], seed: number): T => {
       if (!arr || arr.length === 0) {
         throw new Error('Empty variant array');
       }
-      return arr[v % arr.length];
+      return arr[seed % arr.length];
     };
 
-    const vSummary = pickIndex('summary');
-    const vStructure = pickIndex('structure');
-    const vTrigger = pickIndex('trigger');
-    const vIllusion = pickIndex('illusion');
-    const vIntimacy = pickIndex('intimacy');
-    const vPaywall = pickIndex('paywall');
+    const vSummary = seedFor('summary');
+    const vStructure = seedFor('structure');
+    const vTrigger = seedFor('trigger');
+    const vIllusion = seedFor('illusion');
+    const vIntimacy = seedFor('intimacy');
+    const vPaywall = seedFor('paywall');
+    const vTags = seedFor('tags');
+
+    const labelFor = (key: keyof ScoreMap) =>
+      getDesireLabel(key, computed.locale);
 
     const primary = blocks.byDesire[primaryKey];
     const secondary = blocks.byDesire[secondaryKey];
@@ -89,15 +91,15 @@ export class BuildFreeResultUseCase {
 
     return {
       summaryCard: {
-        mainDesire: String(primaryKey),
-        subDesire: String(secondaryKey),
+        mainDesire: labelFor(primaryKey),
+        subDesire: labelFor(secondaryKey),
         userQuote: primary.userQuote ?? '',
         engineLine: pick(primary.primary.summaryEngine, vSummary),
         styleLine: pick(secondary.secondary.summaryStyle, vSummary),
         tags: this.buildTags({
           primary,
           secondary,
-          vTags: pickIndex('tags'),
+          vTags,
         }),
       },
       structure: {
@@ -106,8 +108,8 @@ export class BuildFreeResultUseCase {
           pick(secondary.secondary.structureStyle, vStructure),
         ],
       },
-      trigger: { lines: primary.trigger[vTrigger] },
-      illusion: { lines: primary.illusion[vIllusion] },
+      trigger: { lines: pick(primary.trigger, vTrigger) },
+      illusion: { lines: pick(primary.illusion, vIllusion) },
       intimacy: {
         lines: [
           pick(primary.primary.intimacyBase, vIntimacy),
@@ -125,6 +127,13 @@ export class BuildFreeResultUseCase {
       h = Math.imul(h, 16777619);
     }
     return h >>> 0;
+  }
+
+  private normalizeAnswers(answers: Record<string, string>): string {
+    return Object.entries(answers ?? {})
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([qid, cid]) => `${qid}=${cid}`)
+      .join('|');
   }
 
   private buildTags(args: {
@@ -148,10 +157,10 @@ export class BuildFreeResultUseCase {
     return Array.from(new Set(out)).slice(0, 5);
   }
 
-  private getBlocksKo({ locale }: { locale: 'en' | 'ko' }): FreeBlocks {
+  private getBlocks({ locale }: { locale: 'en' | 'ko' }): FreeBlocks {
     if (locale === 'ko') {
       return FREE_BLOCKS_KO;
     }
-    return FREE_BLOCKS_KO;
+    return FREE_BLOCKS_EN;
   }
 }

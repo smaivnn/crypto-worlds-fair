@@ -7,28 +7,36 @@ import {
   BuildFreeResultUseCase,
   FreeResultCopy,
 } from './build-free-result.use-case';
+import { BuildBdsmTendencyUseCase } from './build-bdsm-tendency.use-case';
+import { Desire } from '../domain/desire.entity';
 import { GetQuestionSetUseCase } from '@/modules/question/application/get-question-set.use-case';
 
-export type AnalyzeResultInput = {
+export type AnalyseResultInput = {
   profile: any;
   answers: Record<string, string>;
   version?: string;
   locale?: 'en' | 'ko';
 };
 
-export type AnalyzeResultOutput = ComputeResultOutput & {
+export type AnalyseResultOutput = {
+  version: string;
+  locale: 'en' | 'ko';
+  primary: { key: Desire };
+  secondary: { key: Desire };
   copy: FreeResultCopy;
+  tendency: ReturnType<BuildBdsmTendencyUseCase['execute']>;
 };
 
 @Injectable()
-export class AnalyzeResultUseCase {
+export class AnalyseResultUseCase {
   constructor(
     private readonly getQuestionSetUseCase: GetQuestionSetUseCase,
     private readonly computeResultUseCase: ComputeResultUseCase,
     private readonly buildFreeResultUseCase: BuildFreeResultUseCase,
+    private readonly buildBdsmTendencyUseCase: BuildBdsmTendencyUseCase,
   ) {}
-  // AnalyzeResultOutput
-  async execute(input: AnalyzeResultInput): Promise<any> {
+  // AnalyseResultOutput
+  async execute(input: AnalyseResultInput): Promise<AnalyseResultOutput> {
     const version = input.version ?? 'v1';
     const locale = input.locale ?? 'en';
 
@@ -60,9 +68,21 @@ export class AnalyzeResultUseCase {
       answers: input.answers,
     });
 
+    // 4) BDSM 성향 구성
+    const tendency = this.buildBdsmTendencyUseCase.execute({
+      primary: computed.primary.key as Desire,
+      secondary: computed.secondary.key as Desire,
+      locale,
+      access: 'free',
+    });
+
     return {
-      //   ...computed,
+      version,
+      locale,
+      primary: { key: computed.primary.key },
+      secondary: { key: computed.secondary.key },
       copy,
+      tendency,
     };
   }
 }

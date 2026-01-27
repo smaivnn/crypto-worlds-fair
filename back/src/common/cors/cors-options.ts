@@ -6,9 +6,12 @@ export const createCorsOptions = (
   configService: ConfigService,
 ): CorsOptions => {
   const corsConfig = configService.get<CorsConfig>('cors', { infer: true });
+  const originList = corsConfig?.originList ?? [];
+  const openAll = corsConfig?.openAll === true;
+  const openOrigin = corsConfig?.credentials ? true : '*';
 
   return {
-    origin: corsConfig?.originList,
+    origin: openAll ? openOrigin : originList,
     methods: corsConfig?.methods,
     allowedHeaders: corsConfig?.allowedHeaders,
     credentials: corsConfig?.credentials,

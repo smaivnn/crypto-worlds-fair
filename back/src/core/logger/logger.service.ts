@@ -62,25 +62,31 @@ export class LoggerService implements NestLoggerService {
       level: isProd ? 'info' : 'debug', // 로그 레벨 우선 순위: error < warn < info < http < verbose < debug < silly
       format: baseFormat,
 
-      // 로그를 어디로 출력할지 설정(라이브: 파일, 개발: 콘솔)
+      // 로그를 어디로 출력할지 설정(라이브: 콘솔, 개발: 콘솔)
+      // - Railway는 컨테이너 파일이 영구 보관되지 않아 파일 로그가 유지되지 않음
+      // - 운영에서도 stdout(콘솔)로 출력해야 Railway Logs 탭에서 확인 가능
       transports: isProd
         ? // 라이브 환경
           [
-            new DailyRotate({
-              filename: path.join(logDir, 'error-%DATE%.log'),
-              datePattern: 'YYYY-MM-DD',
-              level: 'error',
-              zippedArchive: true, // .gz 파일로 압축
-              maxSize: '20m',
-              maxFiles: '14d', // 14일치 로그 파일 보관(선택)
+            new transports.Console({
+              format: devConsoleFormat,
             }),
-            new DailyRotate({
-              filename: path.join(logDir, 'app-%DATE%.log'),
-              datePattern: 'YYYY-MM-DD',
-              zippedArchive: true, // .gz 파일로 압축
-              maxSize: '20m',
-              maxFiles: '14d', // 14일치 로그 파일 보관(선택)
-            }),
+            // 파일 로그는 Railway 환경에서 유지되지 않아 임시로 비활성화
+            // new DailyRotate({
+            //   filename: path.join(logDir, 'error-%DATE%.log'),
+            //   datePattern: 'YYYY-MM-DD',
+            //   level: 'error',
+            //   zippedArchive: true, // .gz 파일로 압축
+            //   maxSize: '20m',
+            //   maxFiles: '14d', // 14일치 로그 파일 보관(선택)
+            // }),
+            // new DailyRotate({
+            //   filename: path.join(logDir, 'app-%DATE%.log'),
+            //   datePattern: 'YYYY-MM-DD',
+            //   zippedArchive: true, // .gz 파일로 압축
+            //   maxSize: '20m',
+            //   maxFiles: '14d', // 14일치 로그 파일 보관(선택)
+            // }),
           ]
         : // 개발 환경
           [

@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { QUESTION_SET_V1_EN } from '../domain/question-v1.entity';
+import {
+  QUESTION_SET_V1_EN,
+  QUESTION_SET_V1_KO,
+} from '../domain/question-v1.entity';
 
 @Injectable()
 export class GetQuestionSetUseCase {
@@ -13,7 +16,7 @@ export class GetQuestionSetUseCase {
     const questionSets = {
       v1: {
         en: QUESTION_SET_V1_EN,
-        // ko: QUESTION_SET_V1_KO,
+        ko: QUESTION_SET_V1_KO,
       },
     };
 

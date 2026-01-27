@@ -16,7 +16,6 @@ export type DesireKey =
 
 export class ResultTypeDto {
   @Expose() key!: DesireKey;
-  @Expose() score!: number;
 }
 
 export class ResultCopySummaryCardDto {
@@ -56,6 +55,27 @@ export class ResultCopyDto {
   @Expose() paywallCTA!: string; // 고정/3종 중 1개
 }
 
+export class ResultTendencyItemDto {
+  @Expose() key!: string;
+  @Expose() direction?: string;
+  @Expose() visibility!: 'free' | 'paid';
+  @Expose() confidence!: 'high' | 'medium';
+  @Expose() label!: string;
+  @Expose() rationale?: string;
+  @Expose() detail?: string;
+  @Expose() tags?: string[];
+}
+
+export class ResultTendencyDto {
+  @Expose() primary!: DesireKey;
+  @Expose() secondary!: DesireKey;
+  @Expose() source!: 'pair' | 'primary';
+
+  @Expose()
+  @Type(() => ResultTendencyItemDto)
+  items!: ResultTendencyItemDto[];
+}
+
 export class ComputeResultResponseDto {
   @Expose() version!: string;
   @Expose() locale!: 'en' | 'ko';
@@ -68,9 +88,11 @@ export class ComputeResultResponseDto {
   @Type(() => ResultTypeDto)
   secondary!: ResultTypeDto;
 
-  @Expose() confidence!: number;
-
   @Expose()
   @Type(() => ResultCopyDto)
   copy!: ResultCopyDto;
+
+  @Expose()
+  @Type(() => ResultTendencyDto)
+  tendency!: ResultTendencyDto;
 }

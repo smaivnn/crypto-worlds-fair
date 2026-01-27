@@ -26,17 +26,31 @@ export const PgPoolProvider: Provider = {
      * - 이미 max만큼 커넥션이 꽉 찼거나, DB가 느림/장애 상태일 때
      * - 1~3초 권장
      */
+    const baseConfig = {
+      // self-signed 체인 오류를 피하려면 rejectUnauthorized=false 설정이 필요할 수 있음
+      ssl: dbConfig.ssl
+        ? { rejectUnauthorized: dbConfig.sslRejectUnauthorized ?? true }
+        : undefined,
+      // 운영 가면 보통 추가하는 옵션(선택)
+      max: dbConfig.max ?? 10,
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 2_000,
+    };
+
+    if (dbConfig.url) {
+      return new Pool({
+        connectionString: dbConfig.url,
+        ...baseConfig,
+      });
+    }
+
     return new Pool({
       host: dbConfig.host,
       port: dbConfig.port,
       user: dbConfig.user,
       password: dbConfig.password,
       database: dbConfig.database,
-
-      // 운영 가면 보통 추가하는 옵션(선택)
-      max: dbConfig.max ?? 10,
-      idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 2_000,
+      ...baseConfig,
     });
   },
 };
