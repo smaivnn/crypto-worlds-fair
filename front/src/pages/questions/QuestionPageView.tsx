@@ -1,5 +1,4 @@
 import { TopBar } from './section/topBar';
-import { ProgressBar } from './section/progressBar';
 import { QuestionCard } from './section/questionCard';
 import { ChoiceGrid } from './section/choiceGrid';
 import { QuestionsFooter } from './section/footer';
@@ -9,6 +8,7 @@ interface QuestionPageViewProps {
     total: number;
     answered: number;
     question: any;
+    copy: any;
     selected?: string;
     onSelect: (choiceId: string) => void;
     onNext: () => void;
@@ -20,6 +20,7 @@ const QuestionPageView = ({
     total,
     answered,
     question,
+    copy,
     selected,
     onSelect,
     onNext,
@@ -28,8 +29,7 @@ const QuestionPageView = ({
 }: QuestionPageViewProps) => {
     return (
         <section>
-            <TopBar step={step} total={total} />
-            <ProgressBar answered={answered} total={total} />
+            <TopBar step={step} total={total} answered={answered} />
             <main className="mx-auto w-full max-w-[420px] px-4 pt-4 pb-24">
                 <QuestionCard title={question.title} subtitle={question.subtitle} />
                 <ChoiceGrid
@@ -40,6 +40,7 @@ const QuestionPageView = ({
                 />
             </main>
             <QuestionsFooter
+                copy={copy.footer}
                 canBack={step > 1}
                 canNext={Boolean(selected)}
                 isLast={step === total}

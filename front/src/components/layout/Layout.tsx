@@ -5,6 +5,7 @@ import { useBreakpoint } from '@/hooks/useBreakpoint';
 import Header from './header';
 import Footer from './footer';
 import { useEffect } from 'react';
+import { GlobalToast } from '@/components/toast';
 
 type Screen = 'mobile' | 'tablet' | 'laptop' | 'desktop' | 'full';
 type Mode = 'app' | 'document';
@@ -96,6 +97,7 @@ const Layout = ({
             <main className="main-content">{<Outlet />}</main>
             {/* 푸터 */}
             {withFooter && mode === 'document' && <Footer />}
+            <GlobalToast />
         </div>
     );
 };

@@ -9,12 +9,13 @@ interface ProfileViewProps {
 }
 const ProfileView = ({ copy, onBack }: ProfileViewProps) => {
     return (
-        <section className="px-4 md:px-6 space-y-6 pb-8">
+        <section>
             <AppHeader centerMode="title" title="Your Inputs" onBack={onBack} />
-            <Intro copy={copy.intro} />
-            <ProfileForm copy={copy.form} />
-            <PrivacyNote copy={copy.privacyNote} />
-            {/* <ProfileFormCard /> */}
+            <section className="mx-auto w-full py-4 px-6 space-y-4">
+                <Intro copy={copy.intro} />
+                <ProfileForm copy={copy.form} />
+                <PrivacyNote copy={copy.privacyNote} />
+            </section>
         </section>
     );
 };

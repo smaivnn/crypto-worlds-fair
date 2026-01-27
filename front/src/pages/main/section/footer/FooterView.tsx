@@ -11,21 +11,21 @@ const FooterView = ({ copy, className, onClick }: FooterViewProps) => {
             <div className="flex items-center justify-center gap-3 text-[12px] text-white/55">
                 <button
                     className="underline underline-offset-4 hover:text-white/80 transition"
-                    onClick={() => onClick && onClick('/legal')}
+                    onClick={() => onClick && onClick('/terms')}
                 >
                     {copy.terms}
                 </button>
                 <span className="text-white/30">·</span>
                 <button
                     className="underline underline-offset-4 hover:text-white/80 transition"
-                    onClick={() => onClick && onClick('/legal')}
+                    onClick={() => onClick && onClick('/disclaimer')}
                 >
                     {copy.disclaimer}
                 </button>
                 <span className="text-white/30">·</span>
                 <button
                     className="underline underline-offset-4 hover:text-white/80 transition"
-                    onClick={() => onClick && onClick('/legal')}
+                    onClick={() => onClick && onClick('/privacy')}
                 >
                     {copy.privacy}
                 </button>

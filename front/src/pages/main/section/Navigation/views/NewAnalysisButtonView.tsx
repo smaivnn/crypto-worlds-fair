@@ -8,14 +8,14 @@ interface NewAnalysisButtonViewProps {
 }
 const NewAnalysisButtonView = ({ copy, onClick }: NewAnalysisButtonViewProps) => {
     return (
-        <div>
+        <div className="relative">
             <span
                 className={clsx(
                     'pointer-events-none',
-                    'absolute -top-6 -translate-x-1/2',
+                    'absolute left-1 -top-12',
                     'z-20',
-                    'relative',
-                    'rounded-full  px-4 py-3',
+                    'float-label-animation',
+                    'rounded-full px-4 py-3',
                     'text-[11px] font-semibold tracking-wide whitespace-nowrap',
                     'bg-secondary/90 text-white',
                     'border border-accent/80 backdrop-blur',
@@ -35,15 +35,17 @@ const NewAnalysisButtonView = ({ copy, onClick }: NewAnalysisButtonViewProps) =>
                 fitContent={true}
                 className={clsx(
                     'group relative isolate overflow-hidden',
-                    'py-2',
-                    'border border-border/60',
+                    'py-3',
+                    'border border-[#8b1e1e]/80',
+                    'bg-gradient-to-br from-[#6a1a1a] via-[#8b1e1e] to-[#3a0f0f]',
+                    'shadow-[0_12px_28px_rgba(139,30,30,0.34),inset_0_1px_0_rgba(255,255,255,0.06)]',
                     'transition-all duration-200',
-                    'hover:-translate-y-0.5',
-                    'active:scale-[0.99]',
+                    'hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(139,30,30,0.38)]',
+                    'active:translate-y-0 active:scale-[0.99]',
                     // soft inner highlight
                     'before:absolute before:inset-0 before:content-[""]',
-                    'before:bg-[radial-gradient(circle_at_25%_15%,rgba(255,255,255,0.25),transparent_55%)]',
-                    'before:opacity-0 before:transition-opacity before:duration-200',
+                    'before:bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.22),transparent_55%)]',
+                    'before:opacity-60 before:transition-opacity before:duration-200',
                     'group-hover:before:opacity-100',
                     // shimmer sweep
                     'after:absolute after:inset-[-40%] after:content-[""] after:pointer-events-none',
@@ -52,7 +54,11 @@ const NewAnalysisButtonView = ({ copy, onClick }: NewAnalysisButtonViewProps) =>
                     'after:transition-transform after:duration-700 after:ease-out',
                     'group-hover:after:translate-x-[70%]',
                 )}
-                left={<Sparkles className="w-5 h-5" />}
+                left={
+                    <span className="grid h-9 w-9 place-items-center rounded-lg border border-[#8b1e1e]/40 bg-[#2a0a0a] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                        <Sparkles className="w-4.5 h-4.5 text-white" />
+                    </span>
+                }
                 onClick={() => onClick?.({ path: '/questions' })}
             >
                 <div>

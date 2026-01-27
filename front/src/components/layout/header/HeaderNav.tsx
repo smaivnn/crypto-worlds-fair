@@ -1,6 +1,8 @@
 import type { MenuItem } from '@/components/menu';
 import { useModalStore } from '@/store/modalStore';
 import { Link, useLocation } from 'react-router-dom';
+import { useI18n } from '@/hooks/useI18n';
+import { toLocalePath } from '@/lib/locale';
 
 interface LinkMenuProps {
     label: string;
@@ -40,7 +42,9 @@ interface HeaderNavProps {
 }
 const HeaderNav = ({ className, menuItems }: HeaderNavProps) => {
     const { pathname } = useLocation();
-    const isActive = (to: string) => pathname === to;
+    const { locale } = useI18n('en');
+    const toPath = (path: string) => toLocalePath(path, locale);
+    const isActive = (to: string) => pathname === toPath(to);
     const { openModal } = useModalStore();
 
     const handleAboutClick = () => {
@@ -82,7 +86,7 @@ const HeaderNav = ({ className, menuItems }: HeaderNavProps) => {
                     <LinkMenu
                         key={item.path}
                         label={item.title}
-                        to={item.path}
+                        to={toPath(item.path)}
                         isActive={isActive(item.path)}
                     />
                 ),

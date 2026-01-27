@@ -1,4 +1,3 @@
-import type { Choice } from '@pages/questions/question.data';
 import { ChoiceGridView } from './ChoiceGridView';
 
 export function ChoiceGrid({
@@ -7,7 +6,7 @@ export function ChoiceGrid({
     onSelect,
     isLocked,
 }: {
-    choices: Choice[];
+    choices: { id: string; label: string; sub?: string }[];
     value?: string;
     onSelect: (choiceId: string) => void;
     isLocked?: boolean;

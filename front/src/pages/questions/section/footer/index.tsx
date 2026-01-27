@@ -1,12 +1,14 @@
 import { QuestionsFooterView } from './QuestionFooter';
 
 export function QuestionsFooter({
+    copy,
     canBack,
     canNext,
     isLast,
     onBack,
     onNext,
 }: {
+    copy: any;
     canBack: boolean;
     canNext: boolean;
     isLast: boolean;
@@ -15,6 +17,7 @@ export function QuestionsFooter({
 }) {
     return (
         <QuestionsFooterView
+            copy={copy}
             canBack={canBack}
             canNext={canNext}
             isLast={isLast}

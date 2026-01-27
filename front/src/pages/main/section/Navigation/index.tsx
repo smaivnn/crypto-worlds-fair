@@ -2,6 +2,8 @@ import NewAnalysisButtonView from './views/NewAnalysisButtonView';
 import FullAnalysisButtonView from './views/FullAnalysisButtonView';
 import NavigationButtonView from './views/NavigationButtonView';
 import { useNavigate } from 'react-router-dom';
+import { useI18n } from '@/hooks/useI18n';
+import { toLocalePath } from '@/lib/locale';
 
 interface NavigationProps {
     copy: any;
@@ -9,8 +11,10 @@ interface NavigationProps {
 }
 const Navigation = ({ copy }: NavigationProps) => {
     const navigate = useNavigate();
+    const { locale } = useI18n('en');
+
     const onClick = ({ path }: { path: string }) => {
-        navigate(path);
+        navigate(toLocalePath(path, locale));
     };
 
     const newAnalysisButtonViewProps = {
@@ -27,11 +31,11 @@ const Navigation = ({ copy }: NavigationProps) => {
     };
 
     return (
-        <section className="mt-auto px-4 space-y-4">
+        <section className="mt-auto px-4 space-y-4 mb-8">
             {/* 새로운 분석 시작 버튼 */}
             <NewAnalysisButtonView {...newAnalysisButtonViewProps} />
 
-            {/* about 버튼 */}
+            {/* 유료 분석 버튼 */}
             <FullAnalysisButtonView {...fullAnalysisButtonViewProps} />
 
             {/* 추가 옵션 버튼 */}

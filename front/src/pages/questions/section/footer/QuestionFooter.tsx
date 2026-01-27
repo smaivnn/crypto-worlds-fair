@@ -2,12 +2,14 @@
 import { cn } from '@/lib/utils';
 
 export function QuestionsFooterView({
+    copy,
     canBack,
     canNext,
     isLast,
     onBack,
     onNext,
 }: {
+    copy: any;
     canBack: boolean;
     canNext: boolean;
     isLast: boolean;
@@ -28,7 +30,7 @@ export function QuestionsFooterView({
                         !canNext && 'opacity-40',
                     )}
                 >
-                    {isLast ? 'See my result' : 'Next'}
+                    {isLast ? copy.result : copy.next}
                 </button>
 
                 <button
@@ -41,12 +43,10 @@ export function QuestionsFooterView({
                         !canBack && 'opacity-30',
                     )}
                 >
-                    Back
+                    {copy.back}
                 </button>
 
-                <div className="text-center text-[11px] text-white/45">
-                    Saved locally · No sign-up
-                </div>
+                <div className="text-center text-[11px] text-white/45">{copy.footerNote}</div>
             </div>
         </div>
     );

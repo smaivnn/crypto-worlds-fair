@@ -1,11 +1,16 @@
 import { useProfileForm } from './useProfileForm';
 import ProfileFormView from './views/ProfileFormView';
 import { clearStoredProfile, saveStoredProfile } from './profile.storage';
+import { useNavigate } from 'react-router-dom';
+import { useI18n } from '@/hooks/useI18n';
+import { toLocalePath } from '@/lib/locale';
 
 interface ProfileFormProps {
     copy: any;
 }
 const ProfileForm = ({ copy }: ProfileFormProps) => {
+    const navigate = useNavigate();
+    const { locale } = useI18n('en');
     const { form, ui, options, labels } = useProfileForm();
 
     const onSubmit = form.handleSubmit((values) => {
@@ -17,6 +22,7 @@ const ProfileForm = ({ copy }: ProfileFormProps) => {
         };
 
         saveStoredProfile(normalized);
+        navigate(toLocalePath('/questions', locale));
     });
 
     const onClear = () => {
@@ -28,6 +34,7 @@ const ProfileForm = ({ copy }: ProfileFormProps) => {
         ui.setIsBirthPlaceOpen(false);
 
         clearStoredProfile();
+        navigate(toLocalePath('/', locale));
     };
 
     const ProfileFormViewProps = {

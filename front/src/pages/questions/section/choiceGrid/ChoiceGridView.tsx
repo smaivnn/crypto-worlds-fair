@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import type { Choice } from '@pages/questions/question.data';
 
 export function ChoiceGridView({
     choices,
@@ -7,7 +6,7 @@ export function ChoiceGridView({
     onSelect,
     isLocked,
 }: {
-    choices: Choice[];
+    choices: { id: string; label: string; sub?: string }[];
     value?: string;
     onSelect: (choiceId: string) => void;
     isLocked?: boolean;

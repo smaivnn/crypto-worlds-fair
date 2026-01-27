@@ -2,12 +2,22 @@ import { useI18n } from '@/hooks/useI18n';
 import ProfileView from './ProfileView';
 import { profileCopy } from '@/i18n/profile.copy';
 import { useNavigate } from 'react-router-dom';
+import { toLocalePath } from '@/lib/locale';
+
+type ProfileCopy = typeof profileCopy.en;
 const ProfilePage = () => {
-    const { locale, setLocale } = useI18n('en');
+    const { locale } = useI18n('en');
     const navigate = useNavigate();
-    const copy = profileCopy[locale];
+    const base: ProfileCopy = profileCopy.en;
+    const localized: ProfileCopy = (profileCopy[locale] ?? profileCopy.en) as ProfileCopy;
+    const copy = {
+        intro: { ...base.intro, ...(localized.intro ?? {}) },
+        privacyNote: { ...base.privacyNote, ...(localized.privacyNote ?? {}) },
+        form: { ...base.form, ...(localized.form ?? {}) },
+    };
+
     const onBack = () => {
-        navigate('/');
+        navigate(toLocalePath('/', locale));
     };
 
     const inputViewProps = {
