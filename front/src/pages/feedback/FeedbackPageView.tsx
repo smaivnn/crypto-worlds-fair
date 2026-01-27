@@ -1,7 +1,6 @@
 import { AppHeader } from '@/components/appHeader';
 import Hero from './section/hero';
 import Form from './section/form';
-import Coffee from './section/coffee';
 
 type FeedbackCopy = {
     headerTitle: string;
