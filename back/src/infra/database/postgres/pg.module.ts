@@ -23,14 +23,6 @@ export class PgModule implements OnModuleInit, OnModuleDestroy {
     try {
       await this.pool.query('select 1 as ok');
       this.logger.log('PostgreSQL connected');
-      const tables = await this.pool.query(`
-  select
-    to_regclass('public.analysis_session') as analysis_session,
-    to_regclass('public.analysis_share') as analysis_share
-`);
-      this.logger.log(
-        `analysis_session=${tables.rows[0].analysis_session ?? 'null'}, analysis_share=${tables.rows[0].analysis_share ?? 'null'}`,
-      );
     } catch (error: unknown) {
       this.logger.error(
         'Failed to connect to PostgreSQL.',
